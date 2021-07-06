@@ -1,0 +1,25 @@
+sudo: required
+
+services:
+  - docker
+
+language: go
+go:
+  - 1.9
+
+env:
+  matrix:
+    - RUBY_VERSION=2.3
+    - RUBY_VERSION=2.2
+    - RUBY_VERSION=2.1.5
+
+install:
+  - go get -u github.com/shanhe-nsccjn/snips
+  - bundle install
+
+before_script:
+  - rake update
+  - rake generate
+
+script:
+  - rake spec-runtime-ruby-${RUBY_VERSION}
